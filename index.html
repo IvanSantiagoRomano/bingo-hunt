@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Bingo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="controls-container">
+        
+        <fieldset>
+            <legend>1. Añadir Carta Manualmente</legend>
+            <input type="text" id="new-card-input" placeholder="Escribe tu carta aquí...">
+            <button id="add-card-button" title="Añadir carta">+</button>
+        </fieldset>
+        
+        <fieldset>
+            <legend>2. Cargar desde .txt</legend>
+            <input type="file" id="file-input" accept=".txt">
+        </fieldset>
+        
+        <fieldset class="card-list-fieldset">
+            <legend>Cartas Cargadas (<span id="card-count">0</span>)</legend>
+            <ul id="card-list-display">
+                <li>(No hay cartas cargadas)</li>
+            </ul>
+            <button id="clear-list-button">Limpiar Lista</button>
+        </fieldset>
+    </div>
+
+    <hr> <h1>Tablero de Bingo</h1>
+    
+    <button id="random-button">Randomizar Tablero</button>
+    
+    <div id="bingo-board"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

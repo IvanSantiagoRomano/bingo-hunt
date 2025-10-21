@@ -1,0 +1,185 @@
+/* * TEMA HUNT SHOWDOWN
+ * Paleta de colores:
+ * - Fondo: Gris/marrón muy oscuro (#1c1b1a)
+ * - Paneles: Marrón oscuro desaturado (#2b2722)
+ * - Bordes: Marrón medio (#4a443b)
+ * - Texto principal: Blanco "sucio" / Pergamino (#f5f1e8)
+ * - Acento (Títulos/Leyendas): Dorado viejo / Óxido (#c5a05f)
+ * - Acento 2 (Botones/Activo): Rojo/Naranja quemado (#a04020)
+ */
+
+ body {
+    font-family: 'Times New Roman', Times, serif; /* Fuente con serifa para el estilo viejo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1c1b1a; /* Fondo muy oscuro, casi negro pero cálido */
+    color: #f5f1e8; /* Color de texto principal (pergamino) */
+    margin: 20px;
+}
+
+h1 {
+    margin-top: 0;
+    color: #c5a05f; /* Acento dorado */
+}
+
+/* --- CONTROLES --- */
+.controls-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    background-color: #2b2722; /* Panel marrón oscuro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #00000080; /* Sombra negra, no blanca */
+    width: 90%;
+    max-width: 900px;
+}
+
+fieldset {
+    border: 1px solid #4a443b; /* Borde marrón */
+    border-radius: 5px;
+    padding: 15px;
+    margin: 0;
+    min-width: 250px;
+    flex: 1;
+}
+
+legend {
+    font-weight: bold;
+    color: #c5a05f; /* Acento dorado (reemplaza el verde neón) */
+    padding: 0 5px;
+}
+
+#new-card-input {
+    width: calc(100% - 40px);
+    padding: 8px;
+    border: 1px solid #4a443b;
+    border-radius: 4px;
+    background-color: #3c3832; /* Fondo del input */
+    color: #f5f1e8; /* Texto del input */
+}
+
+#add-card-button {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: #8a3b22; /* Botón rojo/marrón */
+    color: #f5f1e8;
+    border: none;
+    transition: background-color 0.2s;
+}
+#add-card-button:hover {
+    background-color: #6b2d1a;
+}
+
+#clear-list-button {
+    background-color: #8a3b22; /* Rojo/marrón oxidado */
+    color: #f5f1e8;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+#clear-list-button:hover {
+    background-color: #6b2d1a; /* Más oscuro al pasar el ratón */
+}
+
+/* Lista de cartas cargadas */
+.card-list-fieldset {
+    min-width: 300px;
+}
+#card-list-display {
+    list-style: none;
+    padding-left: 0;    
+    margin: 0;
+    background-color: #111110; /* Fondo muy oscuro (reemplaza el azul) */
+    border: 1px solid #4a443b;
+    height: 100px;
+    overflow-y: auto;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+#card-list-display li {
+    padding: 5px 8px;
+    border-bottom: 1px solid #333; /* Separador oscuro */
+}
+#card-list-display li:last-child {
+    border-bottom: none;
+}
+/* --------------------------------- */
+
+
+hr {
+    width: 90%;
+    max-width: 900px;
+    border: 0;
+    border-top: 1px solid #4a443b; /* Separador marrón */
+    margin: 30px 0;
+}
+
+/* --- TABLERO DE BINGO --- */
+#random-button {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    background-color: #8a3b22; /* Botón principal (reemplaza el azul) */
+    color: #f5f1e8;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 20px;
+}
+#random-button:hover {
+    background-color: #6b2d1a;
+}
+
+/* El tablero */
+#bingo-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    width: 90vw;
+    max-width: 800px; 
+    border: 3px solid #4a443b; /* Borde del tablero */
+    background-color: #111110; /* Fondo del "gap" */
+}
+
+/* Cada casillero */
+.bingo-square {
+    aspect-ratio: 1 / 1; 
+    background-color: #2b2722; /* Fondo de casillero (marrón oscuro) */
+    border: 1px solid #4a443b; /* Borde de casillero */
+    color: #f5f1e8; /* Texto de casillero */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-wrap: break-word; 
+    word-break: normal;
+    hyphens: auto;
+}
+
+/* Casillero "prendido" */
+.bingo-square.active {
+    background-color: #a04020; /* Naranja/rojo quemado (reemplaza el verde) */
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Casillero vacío */
+.bingo-square.empty {
+    background-color: #221f1b; /* Ligeramente más oscuro que el normal */
+    cursor: not-allowed;
+    border-color: #333;
+}
