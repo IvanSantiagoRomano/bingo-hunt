@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardListDisplay = document.getElementById('card-list-display');
     const cardCount = document.getElementById('card-count');
 
-    // --- 2. FUNCIONES DEL TABLERO ---
+    // --- 2. FUNCIONES DEL TABLERO (Sin cambios) ---
 
     function shuffleArray(array) {
         let newArray = [...array]; 
@@ -51,15 +51,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 3. FUNCIONES DE CONTROL ---
 
+    // 🚀 --- updateVisualList (MODIFICADA) --- 🚀
     function updateVisualList() {
+        // 1. Limpia la lista visual
         cardListDisplay.innerHTML = '';
+        
+        // 2. Actualiza el contador
         cardCount.textContent = allBingoCards.length;
+
+        // 3. Vuelve a llenar la lista
         if (allBingoCards.length === 0) {
             cardListDisplay.innerHTML = '<li>(No hay cartas cargadas)</li>';
         } else {
-            allBingoCards.forEach(card => {
+            // Usamos .forEach con (card, index) para saber la posición
+            allBingoCards.forEach((card, index) => {
                 const li = document.createElement('li');
-                li.textContent = card;
+                
+                // Creamos un <span> para el texto, para que no interfiera con el botón
+                const textSpan = document.createElement('span');
+                textSpan.textContent = card;
+                
+                // Creamos el botón de eliminar
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'X';
+                deleteBtn.classList.add('delete-card-btn'); // Clase para el CSS
+                deleteBtn.title = "Eliminar esta carta";
+                
+                // 💡 Guardamos el índice en el botón usando un data-attribute
+                deleteBtn.dataset.index = index;
+                
+                // Armamos el <li>
+                li.appendChild(textSpan);
+                li.appendChild(deleteBtn);
+                
                 cardListDisplay.appendChild(li);
             });
         }
@@ -84,8 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const newCards = text.split('\n')
                                  .map(line => line.trim())
                                  .filter(line => line.length > 0);
-            
-            // 💡 SUMA las cartas nuevas a las existentes
             allBingoCards = allBingoCards.concat(newCards);
             updateVisualList();
         };
@@ -117,46 +139,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 5. 🚀 INICIAR Y CARGAR CARTAS 🚀 ---
+    // 🚀 --- NUEVO LISTENER PARA LA LISTA DE CARTAS --- 🚀
+    // (Usando delegación de eventos)
+    cardListDisplay.addEventListener('click', (event) => {
+        // 1. Revisa si lo que clickeamos tiene la clase 'delete-card-btn'
+        if (event.target.classList.contains('delete-card-btn')) {
+            
+            // 2. Obtiene el índice que guardamos en 'data-index'
+            // (lo convertimos a número con parseInt)
+            const indexToRemove = parseInt(event.target.dataset.index, 10);
 
-    // Función para cargar las cartas iniciales desde el .txt
+            // 3. 💡 Usa .splice() para quitar ESE ítem del array
+            allBingoCards.splice(indexToRemove, 1);
+            
+            // 4. Vuelve a dibujar la lista con el array actualizado
+            updateVisualList();
+        }
+    });
+
+    // --- 5. INICIAR Y CARGAR CARTAS ---
+
     async function cargarCartasIniciales() {
         try {
-            // Esto SÍ funciona cuando está en un servidor (como GitHub Pages)
             const response = await fetch('cartas bingo.txt');
             if (!response.ok) {
                 throw new Error('No se encontró el archivo "cartas bingo.txt" en el repositorio.');
             }
             const text = await response.text();
-            
-            // Procesa el texto
             const newCards = text.split('\n')
                                  .map(line => line.trim())
                                  .filter(line => line.length > 0);
-            
-            // Añade las cartas cargadas a la lista global
             allBingoCards = allBingoCards.concat(newCards);
-
         } catch (error) {
             console.warn(error.message);
-            // Si falla, no es grave, la lista simplemente empezará vacía
-            // y el usuario puede cargarla manualmente.
         }
     }
 
-    // Función principal de arranque
     async function init() {
-        // 1. Espera a que se carguen las cartas del .txt
         await cargarCartasIniciales();
-        
-        // 2. Ahora genera el primer tablero
         generarTablero();
-        
-        // 3. Y actualiza la lista visual con esas cartas
         updateVisualList();
     }
 
-    // ¡Empezar todo!
     init();
-
 });

@@ -109,6 +109,14 @@ legend {
 #card-list-display li {
     padding: 5px 8px;
     border-bottom: 1px solid #333; /* Separador oscuro */
+    
+    /* 🚀 NUEVO: Flexbox para alinear el botón */
+    display: flex;
+    justify-content: space-between; /* Texto a la izq, botón a la der */
+    align-items: center;
+    
+    /* Evita que el texto largo se rompa mal */
+    word-break: break-all; 
 }
 #card-list-display li:last-child {
     border-bottom: none;
@@ -182,4 +190,21 @@ hr {
     background-color: #221f1b; /* Ligeramente más oscuro que el normal */
     cursor: not-allowed;
     border-color: #333;
+}
+/* 🚀 NUEVO: Estilo para el botón de eliminar individual (X) 🚀 */
+.delete-card-btn {
+    background-color: #a04020; /* Color óxido */
+    color: #f5f1e8;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 10px; /* Espacio entre texto y botón */
+    flex-shrink: 0; /* Evita que el botón se achique */
+    transition: background-color 0.2s;
+}
+.delete-card-btn:hover {
+    background-color: #d9534f; /* Rojo más brillante al pasar */
 }
